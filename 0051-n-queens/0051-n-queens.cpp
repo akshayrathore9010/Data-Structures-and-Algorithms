@@ -1,11 +1,11 @@
 class Solution {
 public:
-    // Unordered maps to keep track of the positions
+    // Queen ke positions track karne ke liye unordered maps
     unordered_map<int, bool> rowCheck;
     unordered_map<int, bool> lowerDiagonalCheck;
     unordered_map<int, bool> upperDiagonalCheck;
 
-    // Function to store the board configuration in the answer
+    // Answer me board configuration ko store karne ka function
     void storeSolution(vector<vector<string>>& ans, vector<vector<char>>& board , int n) {
         vector<string> tempAns;
         for (int i = 0; i < n; i++) {
@@ -13,10 +13,10 @@ public:
             for (int j = 0; j < n; j++) {
                 output.push_back(board[i][j]);
             }
-            // Convert each row of the board to a string and add to tempAns
+            // Board ke har row ko string me convert karke tempAns me add karenge
             tempAns.push_back(output);
         }
-        // Add the current board configuration to the answer
+        // Current board configuration ko answer me add karenge
         ans.push_back(tempAns);
     }
 
@@ -34,31 +34,31 @@ public:
         if (lowerDiagonalCheck[row + col] == true) {
             return false;
         }
-        // It's safe to place the queen
+        // Queen place karna safe hai
         return true;
     }
 
     // Recursive function to solve the N-Queens problem
     void solve(int n, vector<vector<char>>& board, vector<vector<string>>& ans, int col) {
-        // Base case: If all queens are placed
+        // Base case: Agar saari queens place ho gayi, to solution store karke return karo
         if (col >= n) {
             storeSolution(ans, board, n);
             return;
         }
 
-        // Try to place a queen in each row of the current column
+        // Current column ke har row me queen place karne ki koshish karenge
         for (int row = 0; row < n; row++) {
             if (isSafe(row, col, board)) {
-                // Place the queen
+                // Queen ko place karenge
                 board[row][col] = 'Q';
                 rowCheck[row] = true;
                 lowerDiagonalCheck[row + col] = true;
                 upperDiagonalCheck[row - col] = true;
 
-                // Recur to place the rest of the queens
+                // Baaki queens place karne ke liye recur karenge
                 solve(n, board, ans, col + 1);
 
-                // Backtrack: Remove the queen and reset the checks
+                // Backtrack: Queen ko remove karenge aur checks reset karenge
                 board[row][col] = '.';
                 rowCheck[row] = false;
                 lowerDiagonalCheck[row + col] = false;
@@ -67,14 +67,14 @@ public:
         }
     }
 
-    // Main function to solve the N-Queens problem
+    // N-Queens problem solve karne ka main function
     vector<vector<string>> solveNQueens(int n) {
-        // Initialize the board with '.'
+        // Board ko '.' se initialize karenge
         vector<vector<char>> board(n, vector<char>(n, '.'));
         vector<vector<string>> ans;
         int col = 0;
 
-        // Start solving from the first column
+        // Pehle column se solve karna start karenge
         solve(n, board, ans, col);
         return ans;
     }
