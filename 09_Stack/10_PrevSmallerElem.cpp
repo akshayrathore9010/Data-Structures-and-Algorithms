@@ -28,7 +28,7 @@ void solve(vector<int> &arr, vector<int> &ans)
 
         s.push(elem);
     }
-}
+} 
 
 int main()
 {
